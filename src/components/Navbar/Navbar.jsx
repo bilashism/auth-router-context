@@ -6,7 +6,7 @@ const Navbar = () => {
     <nav className="bg-neutral text-neutral-content">
       <div className="navbar gap-6 container mx-auto">
         <Link to="/" className="btn btn-ghost normal-case text-xl">
-          daisyUI
+          ARC
         </Link>
         <Link to="home">home</Link>
         <Link to="login">login</Link>
