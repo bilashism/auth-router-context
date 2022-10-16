@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/UserContext/UserContext";
 
 const Navbar = () => {
   const [menuState, setMenuState] = useState(false);
@@ -11,9 +10,6 @@ const Navbar = () => {
 
   const handleToggleMainMenu = () =>
     setMenuState(prevStatus => (prevStatus = !prevStatus));
-
-  const { user } = useContext(AuthContext);
-  console.log(user);
 
   return (
     <nav className="bg-neutral text-neutral-content">

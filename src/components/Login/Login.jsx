@@ -1,13 +1,26 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/UserContext/UserContext";
 
 const Login = () => {
+  const loginFormRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const { signIn } = useContext(AuthContext);
 
   const handleLogInFormSubmit = ev => {
     ev.preventDefault();
-    console.log(emailRef.current.value, passwordRef.current.value);
+    const emailValue = emailRef.current.value;
+    const passwordValue = passwordRef.current.value;
+    if (!emailValue && !passwordValue) return;
+
+    signIn(emailValue, passwordValue)
+      .then(result => {
+        const user = result?.user;
+        console.log("registered user: ", user);
+        loginFormRef.current.reset();
+      })
+      .catch(err => console.error(err));
   };
 
   return (
@@ -24,7 +37,8 @@ const Login = () => {
           </div>
           <form
             onSubmit={handleLogInFormSubmit}
-            className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
+            ref={loginFormRef}>
             <div className="card-body">
               <div className="form-control">
                 <label className="label">

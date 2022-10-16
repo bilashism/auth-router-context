@@ -1,18 +1,26 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/UserContext/UserContext";
 
 const Register = () => {
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
 
+  const { user, createUser } = useContext(AuthContext);
+
   const handleRegisterFormSubmit = ev => {
     ev.preventDefault();
-    console.log(
-      nameRef.current.value,
-      emailRef.current.value,
-      passwordRef.current.value
-    );
+    const emailValue = emailRef.current.value;
+    const passwordValue = passwordRef.current.value;
+    if (!emailValue && !passwordValue) return;
+
+    createUser(emailValue, passwordValue)
+      .then(result => {
+        const user = result?.user;
+        console.log("registered user: ", user);
+      })
+      .catch(err => console.error(err));
   };
 
   return (
