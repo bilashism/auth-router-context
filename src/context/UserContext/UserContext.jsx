@@ -34,8 +34,8 @@ const UserContext = ({ children }) => {
   // cleanup is required for the user and data management
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
-      setUser(currentUser);
-      setLoading(false);
+      setUser(prev => (prev = { ...user, ...currentUser }));
+      setLoading(prev => (prev = !loading));
     });
 
     return () => unsubscribe();
