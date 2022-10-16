@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/UserContext/UserContext";
 
 const Navbar = () => {
   const [menuState, setMenuState] = useState(false);
+  const { userSignOut } = useContext(AuthContext);
 
   useEffect(() => {
     window.addEventListener("resize", () => setMenuState(false));
@@ -10,6 +12,14 @@ const Navbar = () => {
 
   const handleToggleMainMenu = () =>
     setMenuState(prevStatus => (prevStatus = !prevStatus));
+
+  const handleSignOut = () => {
+    userSignOut()
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => console.error(err));
+  };
 
   return (
     <nav className="bg-neutral text-neutral-content">
@@ -92,7 +102,9 @@ const Navbar = () => {
                 <a>Settings</a>
               </li>
               <li>
-                <a>Logout</a>
+                <button onClick={handleSignOut} type="button">
+                  Logout
+                </button>
               </li>
             </ul>
           </div>
