@@ -51,6 +51,7 @@ const Register = () => {
                   placeholder="email"
                   className="input input-bordered"
                   ref={emailRef}
+                  autoComplete="username"
                 />
               </div>
               <div className="form-control">
@@ -62,6 +63,7 @@ const Register = () => {
                   placeholder="password"
                   className="input input-bordered"
                   ref={passwordRef}
+                  autoComplete="current-password"
                 />
                 <label className="label">
                   <Link to="/login" className="label-text-alt link link-hover">

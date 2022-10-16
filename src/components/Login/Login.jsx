@@ -35,6 +35,7 @@ const Login = () => {
                   placeholder="email"
                   className="input input-bordered"
                   ref={emailRef}
+                  autoComplete="username"
                 />
               </div>
               <div className="form-control">
@@ -46,6 +47,7 @@ const Login = () => {
                   placeholder="password"
                   className="input input-bordered"
                   ref={passwordRef}
+                  autoComplete="current-password"
                 />
               </div>
               <div className="flex flex-wrap gap-6 justify-between mt-4">

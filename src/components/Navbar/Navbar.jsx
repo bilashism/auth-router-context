@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/UserContext/UserContext";
 
 const Navbar = () => {
   const [menuState, setMenuState] = useState(false);
+
   useEffect(() => {
     window.addEventListener("resize", () => setMenuState(false));
   }, []);
-  const handleToggleMainMenu = () => setMenuState(prev => (prev = !prev));
+
+  const handleToggleMainMenu = () =>
+    setMenuState(prevStatus => (prevStatus = !prevStatus));
+
+  const { user } = useContext(AuthContext);
+  console.log(user);
 
   return (
     <nav className="bg-neutral text-neutral-content">
