@@ -1,17 +1,19 @@
 import React, { useContext, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/UserContext/UserContext";
 
 const Login = () => {
   const loginFormRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const navigate = useNavigate();
   const { signIn, signInWithGoogle } = useContext(AuthContext);
 
   const handleSignInWithGoogle = () => {
     signInWithGoogle()
       .then(result => {
         console.log(result);
+        navigate("/settings");
       })
       .catch(err => console.error(err));
   };
@@ -25,8 +27,8 @@ const Login = () => {
     signIn(emailValue, passwordValue)
       .then(result => {
         const user = result?.user;
-        console.log("registered user: ", user);
         loginFormRef.current.reset();
+        navigate("/settings");
       })
       .catch(err => console.error(err));
   };

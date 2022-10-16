@@ -32,7 +32,7 @@ const Navbar = () => {
             ARC
           </Link>
         </div>
-        <div className="flex-1 flex-grow-[12] flex flex-col gap-4 relative isolate z-10 lg:flex-row lg:justify-center">
+        <div className="flex-1 flex-grow-[12] flex flex-col gap-4 relative isolate z-10 lg:flex-row lg:justify-center capitalize">
           <button
             onClick={handleToggleMainMenu}
             type="button"
@@ -45,9 +45,10 @@ const Navbar = () => {
                 ? "flex flex-col absolute top-full bg-neutral p-5"
                 : "hidden"
             } lg:flex gap-4`}>
-            <Link to="home">home</Link>
-            <Link to="login">login</Link>
-            <Link to="register">register</Link>
+            <Link to="/home">home</Link>
+            <Link to="/login">login</Link>
+            <Link to="/register">register</Link>
+            <Link to="/settings">settings</Link>
           </div>
         </div>
         <div className="flex-1 ">
