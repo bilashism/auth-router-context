@@ -6,7 +6,15 @@ const Login = () => {
   const loginFormRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { signIn } = useContext(AuthContext);
+  const { signIn, signInWithGoogle } = useContext(AuthContext);
+
+  const handleSignInWithGoogle = () => {
+    signInWithGoogle()
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => console.error(err));
+  };
 
   const handleLogInFormSubmit = ev => {
     ev.preventDefault();
@@ -35,53 +43,63 @@ const Login = () => {
               et a id nisi.
             </p>
           </div>
-          <form
-            onSubmit={handleLogInFormSubmit}
-            className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
-            ref={loginFormRef}>
-            <div className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
-                <input
-                  type="email"
-                  placeholder="email"
-                  className="input input-bordered"
-                  ref={emailRef}
-                  autoComplete="username"
-                />
+          <div className="">
+            <form
+              onSubmit={handleLogInFormSubmit}
+              className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
+              ref={loginFormRef}>
+              <div className="card-body">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Email</span>
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="email"
+                    className="input input-bordered"
+                    ref={emailRef}
+                    autoComplete="username"
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Password</span>
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="password"
+                    className="input input-bordered"
+                    ref={passwordRef}
+                    autoComplete="current-password"
+                  />
+                </div>
+                <div className="flex flex-wrap gap-6 justify-center mt-4 text-center">
+                  <button
+                    className="label-text-alt link link-hover"
+                    type="button">
+                    Forgot password?
+                  </button>
+                  <Link
+                    to="/register"
+                    className="label-text-alt link link-hover">
+                    Create a new account
+                  </Link>
+                </div>
+                <div className="form-control mt-6">
+                  <button className="btn btn-primary" type="submit">
+                    Login
+                  </button>
+                  <button
+                    onClick={handleSignInWithGoogle}
+                    type="button"
+                    className="btn btn-secondary mt-4">
+                    use google login
+                  </button>
+                </div>
               </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
-                <input
-                  type="password"
-                  placeholder="password"
-                  className="input input-bordered"
-                  ref={passwordRef}
-                  autoComplete="current-password"
-                />
-              </div>
-              <div className="flex flex-wrap gap-6 justify-between mt-4">
-                <button
-                  className="label-text-alt link link-hover"
-                  type="button">
-                  Forgot password?
-                </button>
-                <span className="border hidden sm:inline-flex"></span>
-                <Link to="/register" className="label-text-alt link link-hover">
-                  Create a new account
-                </Link>
-              </div>
-              <div className="form-control mt-6">
-                <button className="btn btn-primary" type="submit">
-                  Login
-                </button>
-              </div>
-            </div>
-          </form>
+            </form>
+            <div className=""></div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/UserContext/UserContext";
 
 const Navbar = () => {
+  const profileImgRef = useRef();
   const [menuState, setMenuState] = useState(false);
-  const { userSignOut } = useContext(AuthContext);
+  const { user, userSignOut } = useContext(AuthContext);
 
   useEffect(() => {
     window.addEventListener("resize", () => setMenuState(false));
@@ -86,7 +87,22 @@ const Navbar = () => {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src="https://placeimg.com/80/80/people" />
+                <img
+                  src={
+                    user?.photoURL
+                      ? user?.photoURL
+                      : `https://dummyimage.com/80x80.png?text=80x80`
+                  }
+                  width="80"
+                  height="80"
+                  loading="lazy"
+                  fetchpriority="low"
+                  decoding="async"
+                  ref={profileImgRef}
+                  onError={() =>
+                    (profileImgRef.current.src = `https://dummyimage.com/80x80/ff0000/ffffff.png?text=404`)
+                  }
+                />
               </div>
             </label>
             <ul
