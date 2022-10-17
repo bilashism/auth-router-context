@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/UserContext/UserContext";
 
 const Login = () => {
@@ -7,13 +7,24 @@ const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
-  const { signIn, signInWithGoogle } = useContext(AuthContext);
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
+  const { signIn, signInWithGoogle, verifyEmail, resetPassword } =
+    useContext(AuthContext);
 
   const handleSignInWithGoogle = () => {
     signInWithGoogle()
       .then(result => {
         console.log(result);
-        navigate("/settings");
+        navigate(from, { replace: true });
+      })
+      .catch(err => console.error(err));
+  };
+
+  const handleResetPassword = email => {
+    resetPassword(email)
+      .then(data => {
+        console.log(data);
       })
       .catch(err => console.error(err));
   };
@@ -28,7 +39,12 @@ const Login = () => {
       .then(result => {
         const user = result?.user;
         loginFormRef.current.reset();
-        navigate("/settings");
+        verifyEmail()
+          .then(data => {
+            console.log("email verify:", data);
+          })
+          .catch(err => console.error(err));
+        navigate(from, { replace: true });
       })
       .catch(err => console.error(err));
   };
@@ -78,7 +94,11 @@ const Login = () => {
                 <div className="flex flex-wrap gap-6 justify-center mt-4 text-center">
                   <button
                     className="label-text-alt link link-hover"
-                    type="button">
+                    type="button"
+                    onClick={() =>
+                      emailRef.current.value &&
+                      handleResetPassword(emailRef.current.value)
+                    }>
                     Forgot password?
                   </button>
                   <Link

@@ -5,6 +5,8 @@ import {
   getAuth,
   GoogleAuthProvider,
   onAuthStateChanged,
+  sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut
@@ -20,16 +22,30 @@ const UserContext = ({ children }) => {
 
   const createUser = (email, password) =>
     createUserWithEmailAndPassword(auth, email, password);
-  const signIn = (email, password) =>
-    signInWithEmailAndPassword(auth, email, password);
+  const signIn = (email, password) => {
+    setLoading(prev => (prev = true));
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
   const googleProvider = new GoogleAuthProvider();
 
   const signInWithGoogle = () => {
+    setLoading(prev => (prev = true));
     return signInWithPopup(auth, googleProvider);
   };
 
-  const userSignOut = () => signOut(auth);
+  const userSignOut = () => {
+    setLoading(prev => (prev = true));
+    return signOut(auth);
+  };
+
+  const verifyEmail = () => {
+    return sendEmailVerification(auth.currentUser);
+  };
+
+  const resetPassword = email => {
+    return sendPasswordResetEmail(auth, email);
+  };
 
   // cleanup is required for the user and data management
   useEffect(() => {
@@ -44,6 +60,8 @@ const UserContext = ({ children }) => {
   const authInfo = {
     user,
     loading,
+    verifyEmail,
+    resetPassword,
     createUser,
     signIn,
     userSignOut,
